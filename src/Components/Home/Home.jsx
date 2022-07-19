@@ -180,7 +180,7 @@ console.log(currenttemp, " cureent temp")
 const handleClick = ()=>{
  
     newData();
-   document.getElementById("searchbox").value = "";
+  
 }
 
 function doAction(val){
