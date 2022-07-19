@@ -93,7 +93,7 @@ const newData = async ()=>{
   }else {
      link =
        "https://api.openweathermap.org/data/2.5/weather?q=" +
-       city +
+       city.toLowerCase() +
        "&units=metric&appid=9102fcb602fc2c718391570e2dab5618";
 
   }
