@@ -3,14 +3,44 @@ import axios from "axios"
 import Image from "../../Images/location-pin.png"
 import Cloudy from "../../Images/cloudy.png"
 import Sunny from "../../Images/sunny.png"
-import { useEffect } from "react"
+import { useEffect, useCallback } from "react";
 import { useState } from "react"
 import Chart from "react-apexcharts";
 import { Second } from "../Secondbox/Second"
 import { AddCity } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import { State } from "country-state-city";
+// const cities = require("all-the-cities");
 export const Home = ()=>{
+    const [suggestions, setSuggestions] = useState("");
 
+    let cities = State.getStatesOfCountry("IN");
+        const debounce = (func) => {
+          let timer;
+          return function (...args) {
+            const context = this;
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(() => {
+              timer = null;
+              func.apply(context, args);
+            }, 500);
+          };
+        };
+             const handleChangee = (value) => {
+              console.log(cities, " ye hai cities smjhe")
+              if (value.length < 1){
+                setSuggestions([]);
+                return
+              };
+let data =   cities.filter((item) => item.name.toLowerCase().includes(value.toLowerCase()))
+console.log(data, " ye hai data")                 
+setSuggestions(data)
+             };
+
+      const optimizedFn = useCallback(debounce(handleChangee), []);
+  
+
+ 
 const { cityname } = useSelector((state) => state.regState);
 
 const dispatch = useDispatch();
@@ -148,8 +178,18 @@ console.log(hourlyFor, "dfdfd")
 console.log(data, " data")
 console.log(currenttemp, " cureent temp")
 const handleClick = ()=>{
-    newData();
  
+    newData();
+   document.getElementById("searchbox").value = "";
+}
+
+function doAction(val){
+ SetCity(val);
+ optimizedFn(val);
+}
+
+function handleBtnClick(el){
+  document.getElementById("searchbox").value=el.name
 }
   return (
     <div id="mainhome">
@@ -159,18 +199,38 @@ const handleClick = ()=>{
         <div>
           <div id="box">
             <img src={Image} alt="" id="locsign" />
+            {/* <input
+              type="text"
+              className="search"
+              placeholder="Enter something here..."
+              onChange={(e) => optimizedFn(e.target.value)}
+            /> */}
+
             <input
+              type="text"
+              placeholder="Enter something here..."
               onChange={(e) => {
-                SetCity(e.target.value);
-                console.log(city, " cityyyyy");
+                doAction(e.target.value);
               }}
               id="searchbox"
-              type="text"
-              placeholder="Delhi"
             />
+
             <button id="searchbtn" onClick={handleClick}>
               Search
             </button>
+          </div>
+          <div id="searchsuggestion">
+            {suggestions.length > 0 && (
+              <div className="autocomplete">
+                {suggestions.map((el, i) => (
+                  <div key={i} className="autocompleteItems" onClick={()=>{
+                    handleBtnClick(el)
+                  }}>
+                    <span>{el.name}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           <div id="secondbox">
             <Second
