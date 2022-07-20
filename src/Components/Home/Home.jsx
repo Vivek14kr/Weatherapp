@@ -273,17 +273,41 @@ export const Home = ()=>{
 
   console.log(cities, " ue hai cities");
   const handleChangee = debounce((value) => {
+     if (value.length < 1) {
+       setSuggestions("");
+       return;
+     }
+     fetch(`https://countriesnow.space/api/v0.1/countries`)
+       .then((res) => res.json())
+       .then((item) => {
+        let final = []
+        let kt = item.data;
+
+        for (let i = 0; i < kt.length; i++){
+          for (let k = 0; k < kt[i].cities.length; k++){
+            let it = kt[i].cities[k];
+          if ( it.toLowerCase().includes(value.toLowerCase())){
+            final.push(it)
+          }
+          }
+        }
+        console.log(final, " finale hone wala h")
+  //  let data = item.data.cities.filter((it) =>
+
+  //  );
+  //  console.log(data, " ye hai data");
+  if (value.length > 1){
+setSuggestions(final);
+  }else {
+    setSuggestions([]);
+  }
+   
+console.log(item.data, " dfdjfidjfiddfdf")
+       });
     console.log(cities, " ye hai cities smjhe");
-    if (value.length < 1) {
-      setSuggestions([]);
-      return;
-    }
-    let data = cities.filter((item) =>
-      item.name.toLowerCase().includes(value.toLowerCase())
-    );
-    console.log(data, " ye hai data");
-    setSuggestions(data);
-  },500);
+   
+ 
+  },1000);
 
   //
 
@@ -423,11 +447,16 @@ export const Home = ()=>{
 
   function doAction(val) {
     SetCity(val);
+    if (val.length < 1){
+      setSuggestions([])
+      return;
+    }
     handleChangee(val);
   }
 
   function handleBtnClick(el) {
-    document.getElementById("searchbox").value = el.name;
+    document.getElementById("searchbox").value = el;
+    setSuggestions([])
   }
   return (
     <div id="mainhome">
@@ -462,7 +491,7 @@ export const Home = ()=>{
                       handleBtnClick(el);
                     }}
                   >
-                    <span>{el.name}</span>
+                    <span>{el}</span>
                   </div>
                 ))}
               </div>
