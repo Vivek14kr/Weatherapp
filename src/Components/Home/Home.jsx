@@ -9,10 +9,13 @@ import Chart from "react-apexcharts";
 import { Second } from "../Secondbox/Second"
 import { AddCity } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import { debounce } from "lodash";
 
 // const cities = require("all-the-cities");
 export const Home = ()=>{
-   const [suggestions, setSuggestions] = useState([]);
+  // AIzaSyDM2jKrhYnPsQ-dHg-g9cvjmd_vSRiF4Wg;
+  const [suggestions, setSuggestions] = useState([]);
+
   let cities = [
     {
       name: "Andaman and Nicobar Islands",
@@ -269,7 +272,7 @@ export const Home = ()=>{
   ];
 
   console.log(cities, " ue hai cities");
-  const handleChangee = (value) => {
+  const handleChangee = debounce((value) => {
     console.log(cities, " ye hai cities smjhe");
     if (value.length < 1) {
       setSuggestions([]);
@@ -280,7 +283,7 @@ export const Home = ()=>{
     );
     console.log(data, " ye hai data");
     setSuggestions(data);
-  };
+  },500);
 
   //
 
@@ -420,7 +423,7 @@ export const Home = ()=>{
 
   function doAction(val) {
     SetCity(val);
-    handleChangee(val)
+    handleChangee(val);
   }
 
   function handleBtnClick(el) {
@@ -434,7 +437,6 @@ export const Home = ()=>{
         <div>
           <div id="box">
             <img src={Image} alt="" id="locsign" />
-      
 
             <input
               type="text"
@@ -453,9 +455,13 @@ export const Home = ()=>{
             {suggestions.length > 0 && (
               <div className="autocomplete">
                 {suggestions.map((el, i) => (
-                  <div key={i} className="autocompleteItems" onClick={()=>{
-                    handleBtnClick(el)
-                  }}>
+                  <div
+                    key={i}
+                    className="autocompleteItems"
+                    onClick={() => {
+                      handleBtnClick(el);
+                    }}
+                  >
                     <span>{el.name}</span>
                   </div>
                 ))}

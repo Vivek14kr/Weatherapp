@@ -12,6 +12,11 @@ margin-left: 25%;
     height: 60px;
     border: none;
     
+
+}
+.map-container{
+    width: 100%;
+    height: 200px;
 }
 .databox{
     width: 12.5%;
