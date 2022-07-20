@@ -2,6 +2,11 @@
   text-align: center;
     padding-top: 0px;
       margin-top: 0px;
+      background-image: url("https://img.freepik.com/free-photo/pastel-blue-vignette-concrete-textured-background_53876-102637.jpg?t=st=1658322597~exp=1658323197~hmac=7ecf77beb5c7ac9a55a1a0b76f834190b456d913124b5159b46660273930fe8f&w=1060");
+ background-size: cover;
+      width: 100%;
+ height: 100%;
+ padding-bottom: 10%;
 }
 
 .App-logo {

@@ -11,9 +11,10 @@ margin-left: 25%;
     width: 80%;
     height: 60px;
     border: none;
-    
+      
+background-image: url("https://img.freepik.com/free-photo/pastel-blue-vignette-concrete-textured-background_53876-102637.jpg?t=st=1658322597~exp=1658323197~hmac=7ecf77beb5c7ac9a55a1a0b76f834190b456d913124b5159b46660273930fe8f&w=1060");
 
-}
+  }
 .map-container{
     width: 100%;
     height: 200px;
@@ -32,16 +33,17 @@ margin-left: 25%;
 #box{
     background-color: white;
     width: 100%;
-    border: 1px solid black;
+    background-image: url("https://img.freepik.com/free-photo/pastel-blue-vignette-concrete-textured-background_53876-102637.jpg?t=st=1658322597~exp=1658323197~hmac=7ecf77beb5c7ac9a55a1a0b76f834190b456d913124b5159b46660273930fe8f&w=1060");
 
+ 
 }
 .graphbox{
     margin-right: 80%;
 }
 #secondbox{
-   
+   margin-top: 20px;
     width: 100%;
-    border: 1px solid black;
+
     display: flex;
     overflow-x: auto;
         overflow-y: hidden;
@@ -83,9 +85,10 @@ margin-left: 25%;
     height: 50px;
 }
 #thirdbox{
+    margin-top: 40px;
     height: 500px;
     width: 100%;
-    border: 1px solid black;
+    
 }
 .pressure{
     border: 1px solid black;
@@ -97,6 +100,7 @@ margin-left: 25%;
     display: flex;
 }
 #fifthbox{
+    margin-bottom: 10%;
     display: flex;
 }
 #secbox{
