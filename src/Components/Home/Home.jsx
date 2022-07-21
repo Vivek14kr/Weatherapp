@@ -1,14 +1,14 @@
 import "./Home.css";
 import axios from "axios";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import GoogleMapReact from "google-map-react";
+
 
 import Image from "../../Images/location-pin.png";
 import Cloudy from "../../Images/cloudy.png";
 import Sunny from "../../Images/sunny.png";
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import Chart from "react-apexcharts";
 import { Second } from "../Secondbox/Second";
@@ -318,7 +318,7 @@ export const Home = () => {
 
   //
 
-  const { cityname } = useSelector((state) => state.regState);
+
 
   const dispatch = useDispatch();
   let [track, setTrack] = useState(false);
@@ -361,7 +361,7 @@ export const Home = () => {
 
   const newData = async () => {
     let link;
-    if (count == 0) {
+    if (count === 0) {
       link =
         "https://api.openweathermap.org/data/2.5/weather?q=" +
         "delhi" +
@@ -389,7 +389,7 @@ export const Home = () => {
     let link;
 
     console.log(lat, " lat ", lon, " lon");
-    if (count == 0) {
+    if (count === 0) {
       link =
         "https://api.openweathermap.org/data/2.5/onecall?lat=" +
         "28.6667" +
@@ -471,7 +471,7 @@ export const Home = () => {
 
   return (
     <div id="mainhome">
-      {track == false ? (
+      {track === false ? (
         <div>.....loading</div>
       ) : (
         <div>
