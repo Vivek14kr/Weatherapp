@@ -18,6 +18,34 @@ import { AddCity } from "../../Redux/actions";
 export const Home = () => {
   // AIzaSyDM2jKrhYnPsQ-dHg-g9cvjmd_vSRiF4Wg;
   const [suggestions, setSuggestions] = useState([]);
+  const [location, setLocation] = useState({
+    loaded: false,
+    coordinates: { lat: "", lng: "" },
+  });
+  useEffect(() => {
+    if (!("geolocation" in navigator)) {
+      onError({
+        code: 0,
+        message: "Geoloaction not supported",
+      });
+    }
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+  }, []);
+  const onSuccess = (location) => {
+    setLocation({
+      loaded: true,
+      coordinates: {
+        lat: location.coords.latitude,
+        lng: location.coords.longitude,
+      },
+    });
+  };
+  const onError = (error) => {
+    setLocation({
+      loaded: true,
+      error,
+    });
+  };
 
   let cities = [
     {
@@ -463,6 +491,23 @@ export const Home = () => {
               Search (Press 2 times)
             </button>
           </div>
+          <div id="latlan">
+            <p>Current Location</p>
+            <b style={{ "margin-top": "20px" }}>
+              Lat:{" "}
+              {location.loaded
+                ? JSON.stringify(location.coordinates.lat)
+                : "Not available"}
+            </b>
+            &nbsp;&nbsp;&nbsp;
+            <b>
+              Long:{" "}
+              {location.loaded
+                ? JSON.stringify(location.coordinates.lng)
+                : "Not available"}
+            </b>
+          </div>
+          ;
           <div id="searchsuggestion">
             {suggestions.length > 0 && (
               <div className="autocomplete">
