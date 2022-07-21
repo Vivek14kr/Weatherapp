@@ -491,23 +491,6 @@ export const Home = () => {
               Search (Press 2 times)
             </button>
           </div>
-          <div id="latlan">
-            <p>Current Location</p>
-            <b style={{ "margin-top": "20px" }}>
-              Lat:{" "}
-              {location.loaded
-                ? JSON.stringify(location.coordinates.lat)
-                : "Not available"}
-            </b>
-            &nbsp;&nbsp;&nbsp;
-            <b>
-              Long:{" "}
-              {location.loaded
-                ? JSON.stringify(location.coordinates.lng)
-                : "Not available"}
-            </b>
-          </div>
-          ;
           <div id="searchsuggestion">
             {suggestions.length > 0 && (
               <div className="autocomplete">
@@ -525,6 +508,23 @@ export const Home = () => {
               </div>
             )}
           </div>
+          <div id="latlan">
+            <p>Current Location</p>
+            <b style={{ "margin-top": "20px" }}>
+              Lat:{" "}
+              {location.loaded
+                ? JSON.stringify(location.coordinates.lat)
+                : "Not available"}
+            </b>
+            &nbsp;&nbsp;&nbsp;
+            <b>
+              Long:{" "}
+              {location.loaded
+                ? JSON.stringify(location.coordinates.lng)
+                : "Not available"}
+            </b>
+          </div>
+          ;
           <div id="secondbox">
             <Second
               data={data}
