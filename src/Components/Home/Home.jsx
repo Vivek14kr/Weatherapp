@@ -1,18 +1,21 @@
-import "./Home.css"
-import axios from "axios"
-import Image from "../../Images/location-pin.png"
-import Cloudy from "../../Images/cloudy.png"
-import Sunny from "../../Images/sunny.png"
-import { useEffect, useCallback } from "react";
-import { useState } from "react"
-import Chart from "react-apexcharts";
-import { Second } from "../Secondbox/Second"
-import { AddCity } from "../../Redux/actions";
+import "./Home.css";
+import axios from "axios";
+
 import { useDispatch, useSelector } from "react-redux";
-import { debounce } from "lodash";
+
+import GoogleMapReact from "google-map-react";
+
+import Image from "../../Images/location-pin.png";
+import Cloudy from "../../Images/cloudy.png";
+import Sunny from "../../Images/sunny.png";
+import { useEffect, useCallback } from "react";
+import { useState } from "react";
+import Chart from "react-apexcharts";
+import { Second } from "../Secondbox/Second";
+import { AddCity } from "../../Redux/actions";
 
 // const cities = require("all-the-cities");
-export const Home = ()=>{
+export const Home = () => {
   // AIzaSyDM2jKrhYnPsQ-dHg-g9cvjmd_vSRiF4Wg;
   const [suggestions, setSuggestions] = useState([]);
 
@@ -272,42 +275,18 @@ export const Home = ()=>{
   ];
 
   console.log(cities, " ue hai cities");
-  const handleChangee = debounce((value) => {
-     if (value.length < 1) {
-       setSuggestions("");
-       return;
-     }
-     fetch(`https://countriesnow.space/api/v0.1/countries`)
-       .then((res) => res.json())
-       .then((item) => {
-        let final = []
-        let kt = item.data;
-
-        for (let i = 0; i < kt.length; i++){
-          for (let k = 0; k < kt[i].cities.length; k++){
-            let it = kt[i].cities[k];
-          if ( it.toLowerCase().includes(value.toLowerCase())){
-            final.push(it)
-          }
-          }
-        }
-        console.log(final, " finale hone wala h")
-  //  let data = item.data.cities.filter((it) =>
-
-  //  );
-  //  console.log(data, " ye hai data");
-  if (value.length > 1){
-setSuggestions(final);
-  }else {
-    setSuggestions([]);
-  }
-   
-console.log(item.data, " dfdjfidjfiddfdf")
-       });
+  const handleChangee = (value) => {
     console.log(cities, " ye hai cities smjhe");
-   
- 
-  },1000);
+    if (value.length < 1) {
+      setSuggestions([]);
+      return;
+    }
+    let data = cities.filter((item) =>
+      item.name.toLowerCase().includes(value.toLowerCase())
+    );
+    console.log(data, " ye hai data");
+    setSuggestions(data);
+  };
 
   //
 
@@ -361,6 +340,7 @@ console.log(item.data, " dfdjfidjfiddfdf")
         "&units=metric&appid=9102fcb602fc2c718391570e2dab5618";
       setCount(count + 1);
     } else {
+      console.log(city, " dfdskfjsdkfjsiodfjsdiofjsdkfskdfdidfjdskfdskfdks");
       link =
         "https://api.openweathermap.org/data/2.5/weather?q=" +
         city.toLowerCase() +
@@ -446,9 +426,10 @@ console.log(item.data, " dfdjfidjfiddfdf")
   };
 
   function doAction(val) {
+    console.log(val, "val");
     SetCity(val);
-    if (val.length < 1){
-      setSuggestions([])
+    if (val.length < 1) {
+      setSuggestions([]);
       return;
     }
     handleChangee(val);
@@ -456,8 +437,10 @@ console.log(item.data, " dfdjfidjfiddfdf")
 
   function handleBtnClick(el) {
     document.getElementById("searchbox").value = el;
-    setSuggestions([])
+    SetCity(el);
+    setSuggestions([]);
   }
+
   return (
     <div id="mainhome">
       {track == false ? (
@@ -488,10 +471,10 @@ console.log(item.data, " dfdjfidjfiddfdf")
                     key={i}
                     className="autocompleteItems"
                     onClick={() => {
-                      handleBtnClick(el);
+                      handleBtnClick(el.name);
                     }}
                   >
-                    <span>{el}</span>
+                    <span>{el.name}</span>
                   </div>
                 ))}
               </div>
@@ -551,4 +534,4 @@ console.log(item.data, " dfdjfidjfiddfdf")
       )}
     </div>
   );
-}
+};
